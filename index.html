@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meray Baby ka Birthday🌹</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to top, #ffecd2 0%, #fcb69f 100%);
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ff0;
+      opacity: 0.7;
+      z-index: 0;
+      pointer-events: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 60px;
+      height: 80px;
+      border-radius: 50% 50% 50% 50%;
+      opacity: 0.9;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-110vh) rotate(360deg); }
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      height: 380px;
+      perspective: 1000px;
+    }
+
+    #envelope {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      background: #d9534f;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .front {
+      position: absolute;
+      width: 0;
+      height: 0;
+      z-index: 3;
+    }
+
+    .flap {
+      border-left: 140px solid transparent;
+      border-right: 140px solid transparent;
+      border-top: 98px solid #d9534f;
+      border-bottom: 82px solid transparent;
+      transform-origin: top;
+      transition: transform 0.5s ease;
+    }
+
+    .pocket {
+      border-left: 140px solid #f5a3a2;
+      border-right: 140px solid #f5a3a2;
+      border-bottom: 90px solid #ff6f61;
+      border-top: 90px solid transparent;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+
+    .letter {
+      position: relative;
+      width: 90%;
+      height: 93%;
+      margin: auto;
+      top: 5%;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 2px 26px rgba(0, 0, 0, 0.12);
+      transition: transform 0.5s ease;
+      overflow: hidden;
+      z-index: 1;
+      font-family: cursive;
+    }
+
+    .words {
+      position: absolute;
+      left: 10%;
+      width: 80%;
+      background: #ffe6e6;
+      border-radius: 4px;
+    }
+
+    .words.line1 {
+      top: 12%;
+      width: 20%;
+      height: 7%;
+    }
+
+    .words.line2,
+    .words.line3,
+    .words.line4 {
+      height: 12%;
+      font-size: 1.1rem;
+      text-align: center;
+      line-height: 2;
+    }
+
+    .words.line2 {
+      top: 30%;
+    }
+
+    .words.line3 {
+      top: 50%;
+    }
+
+    .words.line4 {
+      top: 70%;
+    }
+
+    .open .flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .open .letter {
+      transform: translateY(-100px);
+      z-index: 2;
+    }
+
+    .close .flap {
+      transform: rotateX(0deg);
+      z-index: 5;
+    }
+
+    .close .letter {
+      transform: translateY(0);
+    }
+
+    .hearts {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: 0;
+      width: 100px;
+      height: 90px;
+      opacity: 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 80px;
+      background: #e60073;
+      border-radius: 50px 50px 0 0;
+    }
+
+    .heart::before {
+      left: 50px;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
+    }
+
+    .heart::after {
+      left: 0;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+
+    .open .heart {
+      opacity: 1;
+    }
+
+    .a1 {
+      left: 20%;
+      transform: scale(0.6);
+      animation: slideUp 4s linear forwards,
+                 sideSway 2s ease-in-out 4 alternate;
+      animation-delay: 0.7s;
+    }
+
+    .a2 {
+      left: 55%;
+      transform: scale(1);
+      animation: slideUp 5s linear forwards,
+                 sideSway 4s ease-in-out 2 alternate;
+      animation-delay: 0.7s;
+    }
+
+    .a3 {
+      left: 10%;
+      transform: scale(0.8);
+      animation: slideUp 7s linear forwards,
+                 sideSway 2s ease-in-out 6 alternate;
+      animation-delay: 0.7s;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-600px);
+      }
+    }
+
+    @keyframes sideSway {
+      from {
+        margin-left: 0;
+      }
+      to {
+        margin-left: 50px;
+      }
+    }
+
+    .reset {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .reset button {
+      border: 2px solid #d9534f;
+      background: transparent;
+      color: #d9534f;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .reset button:hover {
+      background: #d9534f;
+      color: white;
+
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Confetti -->
+  <div id="confetti-container"></div>
+
+  <!-- Balloons -->
+  <div class="balloon" style="background:#ff4d4d; left:10%; animation-duration:6s;"></div>
+  <div class="balloon" style="background:#4d79ff; left:30%; animation-duration:5s;"></div>
+  <div class="balloon" style="background:#ffcc00; left:50%; animation-duration:7s;"></div>
+  <div class="balloon" style="background:#33cc33; left:70%; animation-duration:6.5s;"></div>
+  <div class="balloon" style="background:#ff66cc; left:85%; animation-duration:6.2s;"></div>
+
+  <div class="envelope-wrapper">
+    <div id="envelope" class="close">
+      <div class="front flap"></div>
+      <div class="front pocket"></div>
+
+      <div class="letter">
+        <div class="words line1"></div>
+        <div class="words line2">Happy Birthday</div>
+        <div class="words line3">meri zindgiiii</div>
+        <div class="words line4">I Love you❤️</div>
+      </div>
+
+      <div class="hearts">
+        <div class="heart a1"></div>
+        <div class="heart a2"></div>
+        <div class="heart a3"></div>
+      </div>
+    </div>
+
+    <div class="reset">
+      <button onclick="resetEnvelope()">Close</button>
+  <button onclick="window.location.href='letter.html'">Read me meri jaan 🥰</button>
+
+  </div>
+
+  <script>
+    const envelope = document.getElementById("envelope");
+
+    envelope.addEventListener("click", () => {
+      if (envelope.classList.contains("close")) {
+        envelope.classList.remove("close");
+        envelope.classList.add("open");
+      }
+    });
+
+    function resetEnvelope() {
+      envelope.classList.remove("open");
+      envelope.classList.add("close");
+    }
+
+    // Confetti generation
+    const confettiContainer = document.getElementById('confetti-container');
+    for(let i=0; i<100; i++){
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.left = Math.random()*100 + 'vw';
+      confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
+      confetti.style.animationDuration = (2 + Math.random()*3) + 's';
+      confettiContainer.appendChild(confetti);
+    }
+    
+  </script>
+
+</body>
+</html>
